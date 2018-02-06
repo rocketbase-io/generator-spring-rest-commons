@@ -1,8 +1,8 @@
 {
   "name": "generator-spring-rest-commons",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "scandaffoling spring-boot crud rest code",
-  "homepage": "https://www.rocketbase.io",
+  "homepage": "https://github.com/rocketbase-io/generator-spring-rest-commons",
   "author": {
     "name": "Marten Prieß",
     "email": "marten@rocketbase.io",

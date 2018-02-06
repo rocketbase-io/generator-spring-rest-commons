@@ -1,6 +1,6 @@
 # generator spring rest commons
 
-![logo](assets/generator-commons-rest.svg)
+![logo](https://github.com/rocketbase-io/generator-spring-rest-commons/raw/master/assets/generator-commons-rest.svg?sanitize=true)
 
 ![npm](https://nodei.co/npm/generator-spring-rest-commons.png?mini=true)
 

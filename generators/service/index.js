@@ -39,7 +39,8 @@ module.exports = class extends Generator {
         }
         this.placeholder.projectName = input
         return true
-      }
+      },
+      store: true
     }, {
       type: 'input',
       name: 'packageName',

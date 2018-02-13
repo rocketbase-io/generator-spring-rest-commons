@@ -96,7 +96,7 @@ module.exports = class extends Generator {
     var tPath = this.templatePath.bind(this)
     var dPath = this.destinationPath.bind(this)
 
-    copy(tPath('.gitignore'), dPath('.gitignore'))
+    copy(tPath('_.gitignore'), dPath('.gitignore'))
     copyTpl(tPath('_pom.xml'), dPath('pom.xml'), props)
     copyTpl(tPath('_README.md'), dPath('README.md'), props)
 

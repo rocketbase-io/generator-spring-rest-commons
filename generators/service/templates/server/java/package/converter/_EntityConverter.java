@@ -24,5 +24,5 @@ public interface <%= entityName %>Converter extends EntityDataEditConverter<<%= 
     <%= entityName %> newEntity(<%= entityName %>Edit workspace);
 
     @InheritConfiguration()
-    void updateEntityFromEdit(<%= entityName %>Edit edit, @MappingTarget <%= entityName %> entity);
+    <%= entityName %> updateEntityFromEdit(<%= entityName %>Edit edit, @MappingTarget <%= entityName %> entity);
 }

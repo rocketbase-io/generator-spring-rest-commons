@@ -21,7 +21,7 @@
         <dependency>
             <groupId>io.rocketbase.commons</groupId>
             <artifactId>commons-rest-server</artifactId>
-            <version>0.0.1</version>
+            <version>${commons-rest.version}</version>
         </dependency>
 
         <!-- web with undertow -->

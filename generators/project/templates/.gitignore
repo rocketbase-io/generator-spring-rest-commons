@@ -35,3 +35,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+# yeoman
+.yo-rc.json

@@ -17,9 +17,9 @@
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
 
         <!-- dep versions -->
-        <spring-boot.version>1.5.10.RELEASE</spring-boot.version>
-        <mapstruct.version>1.2.0.Final</mapstruct.version>
-        <commons-rest.version>0.1.0</commons-rest.version>
+        <spring-boot.version><%= springBootVersion %></spring-boot.version>
+        <mapstruct.version><%= mapstructVersion %></mapstruct.version>
+        <commons-rest.version><%= commonsRestVersion %></commons-rest.version>
     </properties>
 
     <modules>

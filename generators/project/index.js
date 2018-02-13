@@ -86,7 +86,11 @@ module.exports = class extends Generator {
   }
 
   writing () {
-    var props = this.props
+    var props = _.assign({
+      springBootVersion: '1.5.10.RELEASE',
+      mapstructVersion: '1.2.0.Final',
+      commonsRestVersion: '0.1.0'
+    }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)
     var tPath = this.templatePath.bind(this)
@@ -94,6 +98,7 @@ module.exports = class extends Generator {
 
     copy(tPath('.gitignore'), dPath('.gitignore'))
     copyTpl(tPath('_pom.xml'), dPath('pom.xml'), props)
+    copyTpl(tPath('_README.md'), dPath('README.md'), props)
 
     // api
     copyTpl(tPath('api/_pom.xml'), dPath(props.projectName + '-api/pom.xml'), props)

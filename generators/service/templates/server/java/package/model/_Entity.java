@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 @Document
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class <%= entityName %> implements Serializable {
 
     @Id

@@ -79,6 +79,8 @@ module.exports = class extends Generator {
         // To access props later use this.props.someAnswer;
         this.props = _.assign(answers, this.props)
         this.props.entityVariable = answers.entityName.charAt(0)
+          .toLowerCase() + answers.entityName.slice(1)
+
         this.props.entityFolder = answers.entityName.toLowerCase()
         // some transformations
         this.props.basePath = this.props.packageName.replace(/\./g, '/')
@@ -94,13 +96,13 @@ module.exports = class extends Generator {
 
     // api
     copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Read.java'), props)
-    copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/'  + props.entityName + 'Write.java'), props)
+    copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Write.java'), props)
     copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
 
     // server
     copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
     copyTpl(tPath('server/java/package/converter/_EntityConverter.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
-    copyTpl(tPath('server/java/package/model/_Entity.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/model/' + props.entityName + '.java'), props)
+    copyTpl(tPath('server/java/package/model/_EntityEntity.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
     copyTpl(tPath('server/java/package/repository/_EntityRepository.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)
   }
 

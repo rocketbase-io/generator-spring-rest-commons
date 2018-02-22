@@ -72,6 +72,22 @@ module.exports = class extends Generator {
         }
         return true
       }
+    }, {
+      type: 'list',
+      name: 'springData',
+      message: 'Which Spring-Data version?',
+      choices: [
+        {
+          value: 'mongodb',
+          name: 'MongoDB'
+        },
+        {
+          value: 'jpa',
+          name: 'JPA (with MySQL)'
+        }
+      ],
+      default: 'mongodb',
+      store: true
     }]
 
     return this.prompt(prompts)
@@ -82,6 +98,7 @@ module.exports = class extends Generator {
         this.props.packageName = answers.packageName.toLowerCase()
         // some transformations
         this.props.basePath = this.props.packageName.replace(/\./g, '/')
+        this.props.mongoDb = answers.springData === 'mongodb'
       })
   }
 

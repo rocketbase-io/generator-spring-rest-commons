@@ -56,6 +56,22 @@ module.exports = class extends Generator {
       },
       store: true
     }, {
+      type: 'list',
+      name: 'springData',
+      message: 'Which Spring-Data version?',
+      choices: [
+        {
+          value: 'mongodb',
+          name: 'MongoDB'
+        },
+        {
+          value: 'jpa',
+          name: 'JPA (with MySQL)'
+        }
+      ],
+      default: 'mongodb',
+      store: true
+    }, {
       type: 'input',
       name: 'entityName',
       message: 'Name of Entity',
@@ -78,6 +94,10 @@ module.exports = class extends Generator {
       .then((answers) => {
         // To access props later use this.props.someAnswer;
         this.props = _.assign(answers, this.props)
+
+        this.props.mongoDb = answers.springData === 'mongodb'
+        this.props.idClass = this.props.mongoDb ? 'String' : 'Long'
+
         this.props.entityVariable = answers.entityName.charAt(0)
           .toLowerCase() + answers.entityName.slice(1)
 

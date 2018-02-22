@@ -7,10 +7,16 @@
 
 Scaffold your spring-boot application and generate services. The generated code is based on [rocketbase-io/commons-rest](https://github.com/rocketbase-io/commons-rest).
 
+## features
+
+- setup project with actual spring-boot and commons-rest
+- easy flow to create new service (generated DTOs, Repository, Controller, Converter etc.)
+- you can choose between JPA or MongoDB
+
 ## technology
 
 * [spring-boot](https://projects.spring.io/spring-boot/) application
-* [mongodb](https://www.mongodb.com/) via spring-data-mongodb
+* [MongoDB](https://www.mongodb.com/) via spring-data-mongodb or MySQL via spring-data-jpa
 * [mapstruct](http://mapstruct.org/) to convert between DTOs and Entity
 * [commons-rest](https://github.com/rocketbase-io/commons-rest) to simplify CRUD coding
 

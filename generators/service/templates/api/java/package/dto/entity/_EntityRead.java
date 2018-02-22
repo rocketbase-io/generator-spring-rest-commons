@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class <%= entityName %>Read implements Serializable {
 
-    private String id;
+    private <%= idClass %> id;
 
     private String name;
 }

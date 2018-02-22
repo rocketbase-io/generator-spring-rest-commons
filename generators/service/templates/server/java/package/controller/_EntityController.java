@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api/<%= entityVariable %>")
-public class <%= entityName %>Controller extends AbstractCrudController<<%= entityName %>Entity, <%= entityName %>Read, <%= entityName %>Write, String, <%= entityName %>Converter> {
+public class <%= entityName %>Controller extends AbstractCrudController<<%= entityName %>Entity, <%= entityName %>Read, <%= entityName %>Write, <%= idClass %>, <%= entityName %>Converter> {
 
     @Autowired
     public <%= entityName %>Controller(<%= entityName %>Repository repository, <%= entityName %>Converter converter) {

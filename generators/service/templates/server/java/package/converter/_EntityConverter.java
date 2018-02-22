@@ -1,28 +1,28 @@
 package <%= packageName %>.converter;
 
-import io.rocketbase.commons.converter.EntityDataEditConverter;
-import <%= packageName %>.dto.data.<%= entityName %>Data;
-import <%= packageName %>.dto.edit.<%= entityName %>Edit;
+import io.rocketbase.commons.converter.EntityReadWriteConverter;
+import <%= packageName %>.dto.data.<%= entityName %>Read;
+import <%= packageName %>.dto.edit.<%= entityName %>Write;
 import <%= packageName %>.model.<%= entityName %>;
 import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(config = CentralConfig.class)
-public interface <%= entityName %>Converter extends EntityDataEditConverter<<%= entityName %>, <%= entityName %>Data, <%= entityName %>Edit> {
+public interface <%= entityName %>Converter extends EntityReadWriteConverter<<%= entityName %>, <%= entityName %>Read, <%= entityName %>Write> {
 
-    <%= entityName %> toEntity(<%= entityName %>Data data);
+    <%= entityName %> toEntity(<%= entityName %>Read read);
 
     @InheritInverseConfiguration
-    <%= entityName %>Data fromEntity(<%= entityName %> entity);
+    <%= entityName %>Read fromEntity(<%= entityName %> entity);
 
-    List<<%= entityName %>Data> fromEntities(List<<%= entityName %>> entities);
+    List<<%= entityName %>Read> fromEntities(List<<%= entityName %>> entities);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
     })
-    <%= entityName %> newEntity(<%= entityName %>Edit workspace);
+    <%= entityName %> newEntity(<%= entityName %>Write workspace);
 
     @InheritConfiguration()
-    <%= entityName %> updateEntityFromEdit(<%= entityName %>Edit edit, @MappingTarget <%= entityName %> entity);
+    <%= entityName %> updateEntityFromEdit(<%= entityName %>Write write, @MappingTarget <%= entityName %> entity);
 }

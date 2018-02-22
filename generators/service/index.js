@@ -93,8 +93,8 @@ module.exports = class extends Generator {
     var dPath = this.destinationPath.bind(this)
 
     // api
-    copyTpl(tPath('api/java/package/dto/data/_EntityData.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/data/' + props.entityName + 'Data.java'), props)
-    copyTpl(tPath('api/java/package/dto/edit/_EntityEdit.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/edit/' + props.entityName + 'Edit.java'), props)
+    copyTpl(tPath('api/java/package/dto/data/_EntityRead.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/data/' + props.entityName + 'Read.java'), props)
+    copyTpl(tPath('api/java/package/dto/edit/_EntityWrite.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/edit/' + props.entityName + 'Write.java'), props)
     copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
 
     // server

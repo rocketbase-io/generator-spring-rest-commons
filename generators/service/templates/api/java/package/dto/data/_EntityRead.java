@@ -1,4 +1,4 @@
-package <%= packageName %>.dto.edit;
+package <%= packageName %>.dto.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class <%= entityName %>Edit implements Serializable {
+public class <%= entityName %>Read implements Serializable {
+
+    private String id;
 
     private String name;
 }

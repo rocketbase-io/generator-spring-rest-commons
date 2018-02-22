@@ -1,4 +1,4 @@
-package <%= packageName %>.dto.edit;
+package <%= packageName %>.dto.<%= entityFolder %>;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

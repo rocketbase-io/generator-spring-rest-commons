@@ -1,8 +1,8 @@
 package <%= packageName %>.converter;
 
 import io.rocketbase.commons.converter.EntityReadWriteConverter;
-import <%= packageName %>.dto.data.<%= entityName %>Read;
-import <%= packageName %>.dto.edit.<%= entityName %>Write;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
 import <%= packageName %>.model.<%= entityName %>;
 import org.mapstruct.*;
 

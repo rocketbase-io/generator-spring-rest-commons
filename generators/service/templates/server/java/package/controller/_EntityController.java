@@ -2,8 +2,8 @@ package <%= packageName %>.controller;
 
 import io.rocketbase.commons.controller.AbstractCrudController;
 import <%= packageName %>.converter.<%= entityName %>Converter;
-import <%= packageName %>.dto.data.<%= entityName %>Read;
-import <%= packageName %>.dto.edit.<%= entityName %>Write;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
 import <%= packageName %>.model.<%= entityName %>;
 import <%= packageName %>.repository.<%= entityName %>Repository;
 import lombok.extern.slf4j.Slf4j;

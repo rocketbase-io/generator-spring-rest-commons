@@ -79,7 +79,7 @@ module.exports = class extends Generator {
         // To access props later use this.props.someAnswer;
         this.props = _.assign(answers, this.props)
         this.props.entityVariable = answers.entityName.charAt(0)
-          .toLowerCase() + answers.entityName.slice(1)
+        this.props.entityFolder = answers.entityName.toLowerCase()
         // some transformations
         this.props.basePath = this.props.packageName.replace(/\./g, '/')
       })
@@ -93,8 +93,8 @@ module.exports = class extends Generator {
     var dPath = this.destinationPath.bind(this)
 
     // api
-    copyTpl(tPath('api/java/package/dto/data/_EntityRead.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/data/' + props.entityName + 'Read.java'), props)
-    copyTpl(tPath('api/java/package/dto/edit/_EntityWrite.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/edit/' + props.entityName + 'Write.java'), props)
+    copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Read.java'), props)
+    copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/'  + props.entityName + 'Write.java'), props)
     copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(props.projectName + '-api/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
 
     // server

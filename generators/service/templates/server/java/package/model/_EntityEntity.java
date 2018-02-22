@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class <%= entityName %> implements Serializable {
+public class <%= entityName %>Entity implements Serializable {
 
     @Id
     private String id;

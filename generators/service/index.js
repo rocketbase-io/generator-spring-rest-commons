@@ -98,8 +98,9 @@ module.exports = class extends Generator {
         this.props.mongoDb = answers.springData === 'mongodb'
         this.props.idClass = this.props.mongoDb ? 'String' : 'Long'
 
-        this.props.entityVariable = answers.entityName.charAt(0)
-          .toLowerCase() + answers.entityName.slice(1)
+        this.props.entityCamelCase = _.lowerFirst(answers.entityName)
+        this.props.entityKebabCase = _.kebabCase(answers.entityName)
+        this.props.entitySnakeCase = _.kebabCase(answers.entityName).replace('-','_')
 
         this.props.entityFolder = answers.entityName.toLowerCase()
         // some transformations

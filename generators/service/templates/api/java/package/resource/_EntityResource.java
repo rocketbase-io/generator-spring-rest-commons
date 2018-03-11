@@ -23,7 +23,7 @@ public class <%= entityName %>Resource extends AbstractCrudRestResource<<%= enti
 
     @Override
     protected String getBaseApiUrl() {
-        return baseApiUrl + "/api/<%= entityVariable %>";
+        return baseApiUrl + "/api/<%= entityKebabCase %>";
     }
 
     @Override

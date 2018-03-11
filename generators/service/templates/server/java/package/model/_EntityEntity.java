@@ -14,9 +14,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 <%_ if (mongoDb) { _%>
-@Document
+@Document(collection = "<%= entityCamelCase %>")
 <%_ } else { _%>
 @Entity
+@Table(name =  "<%= entitySnakeCase %>")
 <%_ } _%>
 @Data
 @Builder

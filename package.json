@@ -1,6 +1,6 @@
 {
   "name": "generator-spring-rest-commons",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "scandaffoling spring-boot crud rest code",
   "homepage": "https://github.com/rocketbase-io/generator-spring-rest-commons",
   "author": {

@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Document(collection = "<%= entityCamelCase %>")
 <%_ } else { _%>
 @Entity
-@Table(name =  "<%= entitySnakeCase %>")
+@Table(name =  "<%= entitySnakeCaseUpper %>")
 <%_ } _%>
 @Data
 @Builder

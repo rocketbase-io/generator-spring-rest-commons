@@ -100,7 +100,7 @@ module.exports = class extends Generator {
 
         this.props.entityCamelCase = _.lowerFirst(answers.entityName)
         this.props.entityKebabCase = _.kebabCase(answers.entityName)
-        this.props.entitySnakeCase = _.kebabCase(answers.entityName).replace('-','_')
+        this.props.entitySnakeCaseUpper = _.kebabCase(answers.entityName).replace('-','_').toUpperCase()
 
         this.props.entityFolder = answers.entityName.toLowerCase()
         // some transformations

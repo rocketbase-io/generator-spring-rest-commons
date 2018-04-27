@@ -4,6 +4,7 @@ const chalk = require('chalk')
 const yosay = require('yosay')
 const _ = require('lodash')
 
+
 module.exports = class extends Generator {
 
   constructor (args, opts) {
@@ -14,6 +15,7 @@ module.exports = class extends Generator {
 
   initializing () {
     this.placeholder = {projectName: '', packageName: ''}
+    this.xmlJson = null
   }
 
   prompting () {
@@ -104,9 +106,9 @@ module.exports = class extends Generator {
 
   writing () {
     var props = _.assign({
-      springBootVersion: '1.5.10.RELEASE',
+      springBootVersion: '1.5.12.RELEASE',
       mapstructVersion: '1.2.0.Final',
-      commonsRestVersion: '0.2.0'
+      commonsRestVersion: '0.5.0'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)

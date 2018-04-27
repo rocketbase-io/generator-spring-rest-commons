@@ -1,0 +1,44 @@
+# database connection
+<%_ if (mongoDb) { _%>
+spring:
+  data:
+    mongodb.database: <%= projectName %>
+<%_ } else { _%>
+spring:
+  datasource:
+    url: 'jdbc:mysql://localhost:3306/<%= projectName %>'
+    username: 'root'
+    password: ''
+    driverClassName: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+<%_ } _%>
+# json configuration
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      INDENT_OUTPUT: true
+    default-property-inclusion: NON_NULL
+<%_ if (auth) { _%>
+  # email
+  mail:
+    host: localhost
+    username: user
+    password: ''
+    port: 587
+    properties:
+      mail:
+        debug: false
+        smtp:
+          debug: false
+          auth: true
+          starttls: true
+    test-connection: false
+# auth configuration
+auth:
+  key-secret: '<%= keySecret %>'
+  jwt:
+    secret: '<%= jwtSecret %>'
+<%_ } _%>

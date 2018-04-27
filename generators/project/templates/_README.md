@@ -17,6 +17,7 @@ Generated project with [generator-spring-rest-commons](https://github.com/rocket
 * [spring-boot](https://projects.spring.io/spring-boot/):*<%= springBootVersion%>*
 * [mapstruct](http://mapstruct.org/):*<%= mapstructVersion%>*
 * [commons-rest](https://github.com/rocketbase-io/commons-rest):*<%= commonsRestVersion%>*
+<%_ if (auth) { _%>* [commons-auth](https://github.com/rocketbase-io/commons-auth):*<%= commonsAuthVersion%>*<%_ } _%>
 
 ## usage
 

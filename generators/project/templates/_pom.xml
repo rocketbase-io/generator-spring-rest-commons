@@ -20,6 +20,9 @@
         <spring-boot.version><%= springBootVersion %></spring-boot.version>
         <mapstruct.version><%= mapstructVersion %></mapstruct.version>
         <commons-rest.version><%= commonsRestVersion %></commons-rest.version>
+<%_ if (auth) { _%>
+        <commons-auth.version><%= commonsAuthVersion %></commons-auth.version>
+<%_ } _%>
     </properties>
 
     <modules>

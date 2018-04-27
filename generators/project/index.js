@@ -4,7 +4,6 @@ const chalk = require('chalk')
 const yosay = require('yosay')
 const _ = require('lodash')
 
-
 module.exports = class extends Generator {
 
   constructor (args, opts) {
@@ -14,7 +13,7 @@ module.exports = class extends Generator {
   }
 
   initializing () {
-    this.placeholder = {projectName: '', packageName: ''}
+    this.placeholder = {projectName: '', packageName: '', springData: ''}
     this.xmlJson = null
   }
 
@@ -90,6 +89,12 @@ module.exports = class extends Generator {
       ],
       default: 'mongodb',
       store: true
+    }, {
+      when: response => response.springData === 'mongodb',
+      type: 'confirm',
+      name: 'auth',
+      message: 'With commons-auth (spring-security via JWT)',
+      default: true
     }]
 
     return this.prompt(prompts)
@@ -101,14 +106,23 @@ module.exports = class extends Generator {
         // some transformations
         this.props.basePath = this.props.packageName.replace(/\./g, '/')
         this.props.mongoDb = answers.springData === 'mongodb'
+
+        if (answers.auth) {
+          this.props.auth = true
+          this.props.keySecret = Buffer.from(String.fromCodePoint(...Array.from({length: 32}, () => Math.floor(Math.random() * 57) + 65))).toString('base64')
+          this.props.jwtSecret = Buffer.from(String.fromCodePoint(...Array.from({length: 64}, () => Math.floor(Math.random() * 57) + 65))).toString('base64')
+        } else {
+          this.props.auth = false
+        }
       })
   }
 
   writing () {
     var props = _.assign({
-      springBootVersion: '1.5.12.RELEASE',
+      springBootVersion: '2.0.1.RELEASE',
       mapstructVersion: '1.2.0.Final',
-      commonsRestVersion: '0.5.0'
+      commonsRestVersion: '1.0.0',
+      commonsAuthVersion: '0.2.0'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)
@@ -121,13 +135,18 @@ module.exports = class extends Generator {
 
     // api
     copyTpl(tPath('api/_pom.xml'), dPath(props.projectName + '-api/pom.xml'), props)
-    copy(tPath('api/resources/application-default.properties'), dPath(props.projectName + '-api/src/main/resources/application-default.properties'))
+    copy(tPath('api/resources/application-default.yml'), dPath(props.projectName + '-api/src/main/resources/application-default.yml'))
 
     // server
     copyTpl(tPath('server/_pom.xml'), dPath(props.projectName + '-server/pom.xml'), props)
     copyTpl(tPath('server/java/package/_Application.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/Application.java'), props)
     copyTpl(tPath('server/java/package/converter/_CentralConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/converter/CentralConfig.java'), props)
-    copyTpl(tPath('server/resources/_application.properties'), dPath(props.projectName + '-server/src/main/resources/application.properties'), props)
+    if (this.props.auth) {
+      copyTpl(tPath('server/java/package/config/_MongoDbConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/config/MongoDbConfig.java'), props)
+      copyTpl(tPath('server/java/package/config/_SecurityConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/config/SecurityConfig.java'), props)
+      copyTpl(tPath('server/java/package/initializer/_UserInitializer.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/initializer/UserInitializer.java'), props)
+    }
+    copyTpl(tPath('server/resources/_application.yml'), dPath(props.projectName + '-server/src/main/resources/application.yml'), props)
 
   }
 

@@ -28,10 +28,11 @@
     "yeoman-assert": "^3.1.0"
   },
   "dependencies": {
-    "yeoman-generator": "^2.0.2",
     "chalk": "^2.3.0",
-    "yosay": "^2.0.1",
-    "lodash": "^4.17.5"
+    "lodash": "^4.17.5",
+    "xml2js": "^0.4.19",
+    "yeoman-generator": "^2.0.2",
+    "yosay": "^2.0.1"
   },
   "publishConfig": {
     "access": "public",

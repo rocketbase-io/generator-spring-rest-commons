@@ -142,6 +142,16 @@ module.exports = class extends Generator {
         this.placeholder.name = input
         return true
       }
+    }, {
+      type: 'confirm',
+      name: 'isChild',
+      message: 'Is entity child of other (different controller/resource layout)',
+      default: false
+    }, {
+      when: response => response.isChild,
+      type: 'input',
+      name: 'parentEntityName',
+      message: 'Name of parent Entity'
     }]
 
     return this.prompt(prompts)
@@ -155,6 +165,13 @@ module.exports = class extends Generator {
         this.props.entityCamelCase = _.lowerFirst(answers.entityName)
         this.props.entityKebabCase = _.kebabCase(answers.entityName)
         this.props.entitySnakeCaseUpper = _.kebabCase(answers.entityName).replace('-', '_').toUpperCase()
+
+        if (this.props.isChild) {
+          this.props.parentName = answers.parentEntityName
+          this.props.parentCamelCase = _.lowerFirst(answers.parentEntityName)
+          this.props.parentKebabCase = _.kebabCase(answers.parentEntityName)
+          this.props.parentSnakeCaseUpper = _.kebabCase(answers.parentEntityName).replace('-', '_').toUpperCase()
+        }
 
         this.props.entityFolder = answers.entityName.toLowerCase()
         // some transformations
@@ -172,10 +189,17 @@ module.exports = class extends Generator {
     // api
     copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Read.java'), props)
     copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Write.java'), props)
-    copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
-
+    if (props.isChild) {
+      copyTpl(tPath('api/java/package/resource/_EntityResourceChild.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+    } else {
+      copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+    }
     // server
-    copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+    if (props.isChild) {
+      copyTpl(tPath('server/java/package/controller/_EntityControllerChild.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+    } else {
+      copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+    }
     copyTpl(tPath('server/java/package/converter/_EntityConverter.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
     copyTpl(tPath('server/java/package/model/_EntityEntity.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
     copyTpl(tPath('server/java/package/repository/_EntityRepository.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)

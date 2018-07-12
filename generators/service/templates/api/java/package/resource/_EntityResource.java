@@ -1,32 +1,36 @@
 package <%= packageName %>.resource;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.rocketbase.commons.dto.PageableResult;
 import io.rocketbase.commons.resource.AbstractCrudRestResource;
 import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
 import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.web.client.RestTemplate;
 
-@Service
+
 public class <%= entityName %>Resource extends AbstractCrudRestResource<<%= entityName %>Read, <%= entityName %>Write, <%= idClass %>> {
 
-    private String baseApiUrl;
+    protected String baseUrl;
 
-    public <%= entityName %>Resource(@Value("${resource.base.api.url}") String baseApiUrl, ObjectMapper objectMapper) {
-        super(objectMapper);
-        this.baseApiUrl = baseApiUrl;
+    public <%= entityName %>Resource(String baseUrl) {
+        this(baseUrl, null);
+    }
+
+    public <%= entityName %>Resource(String baseUrl, RestTemplate restTemplate) {
+        Assert.hasText(baseUrl, "baseUrl is required");
+        this.baseUrl = baseUrl;
+        setRestTemplate(restTemplate);
     }
 
     @Override
     protected String getBaseApiUrl() {
-        return baseApiUrl + "/api/<%= entityKebabCase %>";
+        return baseUrl + "/api/<%= entityKebabCase %>";
     }
 
     @Override
-    protected TypeReference<PageableResult<<%= entityName %>Read>> createPagedTypeReference() {
-        return new TypeReference<PageableResult<<%= entityName %>Read>>() {
+    protected ParameterizedTypeReference<PageableResult<<%= entityName %>Read>> createPagedTypeReference() {
+        return new ParameterizedTypeReference<PageableResult<<%= entityName %>Read>>() {
         };
     }
 }

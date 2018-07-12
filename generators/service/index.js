@@ -76,7 +76,7 @@ module.exports = class extends Generator {
       when: () => {return this.apiPathName === null},
       type: 'input',
       name: 'projectName',
-      message: 'Your project name (needs to be same with project-generator!)',
+      message: 'Your project name (needs to be same with project-generator!)?',
       validate: (input) => {
         if (!(/^([a-z0-9_\-]*)$/.test(input))) {
           return chalk.red('The projectName cannot contain special characters and all lowercase')
@@ -97,7 +97,7 @@ module.exports = class extends Generator {
       default: () => {return this.placeholder.packageName},
       type: 'input',
       name: 'packageName',
-      message: 'Base code package structure of project (needs to be same with project-generator!)',
+      message: 'Base code package structure of project (needs to be same with project-generator!)?',
       validate: (input) => {
         if (!(/^([a-z0-9_\.]*)$/.test(input))) {
           return chalk.red('The packageName cannot contain special characters and all lowercase')
@@ -128,7 +128,7 @@ module.exports = class extends Generator {
     }, {
       type: 'input',
       name: 'entityName',
-      message: 'Name of Entity',
+      message: 'Name of Entity?',
       validate: (input) => {
         if (!(/^([a-zA-Z0-9_]*)$/.test(input))) {
           return chalk.red('The entity name cannot contain special characters')
@@ -145,13 +145,18 @@ module.exports = class extends Generator {
     }, {
       type: 'confirm',
       name: 'isChild',
-      message: 'Is entity child of other (different controller/resource layout)',
+      message: 'Is entity child of other (different controller/resource layout)?',
       default: false
     }, {
       when: response => response.isChild,
       type: 'input',
       name: 'parentEntityName',
-      message: 'Name of parent Entity'
+      message: 'Name of parent Entity?'
+    }, {
+      type: 'confirm',
+      name: 'isCustom',
+      message: 'Custom implementation without use of AbstractCrudController of commons-rest?',
+      default: false
     }]
 
     return this.prompt(prompts)
@@ -196,9 +201,17 @@ module.exports = class extends Generator {
     }
     // server
     if (props.isChild) {
-      copyTpl(tPath('server/java/package/controller/_EntityControllerChild.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      if (props.isCustom) {
+        copyTpl(tPath('server/java/package/controller/_EntityCustomControllerChild.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      } else {
+        copyTpl(tPath('server/java/package/controller/_EntityControllerChild.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      }
     } else {
-      copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      if (props.isCustom) {
+        copyTpl(tPath('server/java/package/controller/_EntityCustomController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      } else {
+        copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
+      }
     }
     copyTpl(tPath('server/java/package/converter/_EntityConverter.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
     copyTpl(tPath('server/java/package/model/_EntityEntity.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)

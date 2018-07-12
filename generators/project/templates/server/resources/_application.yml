@@ -38,7 +38,6 @@ spring:
     test-connection: false
 # auth configuration
 auth:
-  key-secret: '<%= keySecret %>'
   jwt:
     secret: '<%= jwtSecret %>'
 <%_ } _%>

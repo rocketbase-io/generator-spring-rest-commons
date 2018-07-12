@@ -11,12 +11,7 @@ import java.util.List;
 @Mapper(config = CentralConfig.class)
 public interface <%= entityName %>Converter extends EntityReadWriteConverter<<%= entityName %>Entity, <%= entityName %>Read, <%= entityName %>Write> {
 
-    <%= entityName %>Entity toEntity(<%= entityName %>Read read);
-
-    @InheritInverseConfiguration
     <%= entityName %>Read fromEntity(<%= entityName %>Entity entity);
-
-    List<<%= entityName %>Read> fromEntities(List<<%= entityName %>Entity> entities);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),

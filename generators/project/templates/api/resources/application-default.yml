@@ -1,3 +1,0 @@
-# base rest url that is used within resources
-resource:
-  base.api.url: http://localhost:8080

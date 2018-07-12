@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.rocketbase.commons.exception.NotFoundException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.Optional;
 
 
@@ -40,9 +41,9 @@ public class <%= entityName %>Controller extends AbstractCrudChildController<<%=
     }
 
     @Override
-    protected Page<<%= entityName %>Entity> findAllByParentId(String parentId, PageRequest pageRequest) {
+    protected Page<<%= entityName %>Entity> findAllByParentId(String parentId, Pageable pageable) {
         // todo: need to add correct implementation
-        // return getRepository().findAllBy<%= parentName %>Id(parentId, pageRequest);
+        // return getRepository().findAllBy<%= parentName %>Id(parentId, pageable);
         return null;
     }
 
@@ -63,4 +64,8 @@ public class <%= entityName %>Controller extends AbstractCrudChildController<<%=
         return (<%= entityName %>Repository) super.getRepository();
     }
 
+    @Override
+    protected Sort getDefaultSort() {
+        return Sort.by("id");
+    }
 }

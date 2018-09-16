@@ -37,7 +37,8 @@ module.exports = class extends Generator {
           this.xmlJson = result
           let modules = result.project.modules[0].module
           try {
-            this.placeholder.packageName = result.project.groupId
+            let packageName = result.project.groupId
+            this.placeholder.packageName = Array.isArray(packageName) ? packageName[0] : packageName
           } catch (e) {
           }
           if (modules.length === 2) {

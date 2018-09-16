@@ -109,7 +109,6 @@ module.exports = class extends Generator {
 
         if (answers.auth) {
           this.props.auth = true
-          this.props.keySecret = Buffer.from(String.fromCodePoint(...Array.from({length: 32}, () => Math.floor(Math.random() * 57) + 65))).toString('base64')
           this.props.jwtSecret = Buffer.from(String.fromCodePoint(...Array.from({length: 64}, () => Math.floor(Math.random() * 57) + 65))).toString('base64')
         } else {
           this.props.auth = false
@@ -119,10 +118,10 @@ module.exports = class extends Generator {
 
   writing () {
     var props = _.assign({
-      springBootVersion: '2.0.3.RELEASE',
+      springBootVersion: '2.0.5.RELEASE',
       mapstructVersion: '1.2.0.Final',
       commonsRestVersion: '1.3.0',
-      commonsAuthVersion: '1.5.0'
+      commonsAuthVersion: '1.6.2'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)

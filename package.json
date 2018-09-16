@@ -24,12 +24,12 @@
     "yeoman-generator"
   ],
   "devDependencies": {
-    "standard-version": "^4.3.0",
-    "yeoman-assert": "^3.1.0"
+    "standard-version": "^4.4.0",
+    "yeoman-assert": "^3.1.1"
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "xml2js": "^0.4.19",
     "yeoman-generator": "^2.0.5",
     "yosay": "^2.0.2"

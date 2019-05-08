@@ -28,7 +28,7 @@
     "yeoman-assert": "^3.1.1"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "lodash": "^4.17.11",
     "xml2js": "^0.4.19",
     "yeoman-generator": "^2.0.5",

@@ -1,12 +1,10 @@
 package <%= packageName %>.config;
 
-import io.rocketbase.commons.model.AppUser;
+import io.rocketbase.commons.security.CommonsPrincipal;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
@@ -23,14 +21,11 @@ public class MongoDbConfig {
 
         @Override
         public Optional<String> getCurrentAuditor() {
-            Authentication authentication = SecurityContextHolder.getContext()
-                    .getAuthentication();
-
-            if (!(authentication instanceof AppUser)) {
-                return Optional.empty();
+            CommonsPrincipal current = CommonsPrincipal.getCurrent();
+            if (current != null) {
+                return Optional.of(current.getUsername());
             }
-
-            return Optional.of(((AppUser) authentication.getPrincipal()).getUsername());
+            return Optional.empty();
         }
     }
 

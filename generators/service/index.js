@@ -13,6 +13,7 @@ module.exports = class extends Generator {
     this.props = {fields: []}
     this.sayYo = _.has(opts, 'subCall')
     this.apiPathName = null
+    this.modelPathName = null
     this.serverPathName = null
     this.springData = null
   }
@@ -41,17 +42,18 @@ module.exports = class extends Generator {
             this.placeholder.packageName = Array.isArray(packageName) ? packageName[0] : packageName
           } catch (e) {
           }
-          if (modules.length === 2) {
+          if (modules.length === 3) {
             let apiModules = modules.filter(m => (/\-api/gi).test(m))
             if (apiModules.length === 1) {
               this.apiPathName = apiModules[0]
-              this.serverPathName = modules.filter(m => m !== this.apiPathName)
-            } else {
-              let serverModules = modules.filter(m => (/\-(server|rest)/gi).test(m))
-              if (serverModules.length === 1) {
-                this.serverPathName = serverModules[0]
-                this.apiPathName = modules.filter(m => m !== this.serverPathName)
-              }
+            }
+            let serverModules = modules.filter(m => (/\-(server|rest)/gi).test(m))
+            if (serverModules.length === 1) {
+              this.serverPathName = serverModules[0]
+            }
+            let modelModules = modules.filter(m => (/\-(model)/gi).test(m))
+            if (modelModules.length === 1) {
+              this.modelPathName = modelModules[0]
             }
 
             if (this.serverPathName !== null && fs.existsSync(this.destinationPath(this.serverPathName + '/pom.xml'))) {
@@ -65,7 +67,6 @@ module.exports = class extends Generator {
                 }
               })
             }
-
           }
         })
       }
@@ -89,6 +90,7 @@ module.exports = class extends Generator {
         this.placeholder.projectName = input
 
         this.apiPathName = input + '-api'
+        this.modelPathName = input + '-model'
         this.serverPathName = input + '-server'
 
         return true
@@ -200,6 +202,11 @@ module.exports = class extends Generator {
     } else {
       copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
     }
+
+    // model
+    copyTpl(tPath('model/java/package/model/_EntityEntity.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
+    copyTpl(tPath('model/java/package/repository/_EntityRepository.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)
+
     // server
     if (props.isChild) {
       if (props.isCustom) {
@@ -215,8 +222,6 @@ module.exports = class extends Generator {
       }
     }
     copyTpl(tPath('server/java/package/converter/_EntityConverter.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
-    copyTpl(tPath('server/java/package/model/_EntityEntity.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
-    copyTpl(tPath('server/java/package/repository/_EntityRepository.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)
   }
 
   install () {

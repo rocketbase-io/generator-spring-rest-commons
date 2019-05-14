@@ -120,7 +120,7 @@ module.exports = class extends Generator {
     var props = _.assign({
       springBootVersion: '2.1.4.RELEASE',
       mapstructVersion: '1.2.0.Final',
-      commonsRestVersion: '1.4.2',
+      commonsRestVersion: '1.5.0',
       commonsAuthVersion: '2.0.0.Beta2'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
@@ -134,6 +134,9 @@ module.exports = class extends Generator {
 
     // api
     copyTpl(tPath('api/_pom.xml'), dPath(props.projectName + '-api/pom.xml'), props)
+
+    // model
+    copyTpl(tPath('model/_pom.xml'), dPath(props.projectName + '-model/pom.xml'), props)
 
     // server
     copyTpl(tPath('server/_pom.xml'), dPath(props.projectName + '-server/pom.xml'), props)

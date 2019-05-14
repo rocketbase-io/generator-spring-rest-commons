@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId><%= pomGroupId %></groupId>
-            <artifactId><%= projectName %>-api</artifactId>
+            <artifactId><%= projectName %>-model</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -24,41 +24,18 @@
             <version>${commons-rest.version}</version>
         </dependency>
 
-        <!-- web with undertow -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        <!-- web end -->
 
-<%_ if (mongoDb) { _%>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-<%_ if (auth) { _%>
+<%_ if (mongoDb && auth) { _%>
         <dependency>
             <groupId>io.rocketbase.commons</groupId>
             <artifactId>commons-auth-mongo</artifactId>
             <version>${commons-auth.version}</version>
         </dependency>
-<%_ } _%>
-<%_ } else { _%>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
+<%_ } else if (!mongoDb) { _%>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

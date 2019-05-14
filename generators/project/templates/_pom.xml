@@ -27,6 +27,7 @@
 
     <modules>
         <module><%= projectName %>-api</module>
+        <module><%= projectName %>-model</module>
         <module><%= projectName %>-server</module>
     </modules>
 

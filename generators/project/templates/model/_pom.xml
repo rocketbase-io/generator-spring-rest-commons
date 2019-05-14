@@ -9,22 +9,26 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId><%= projectName %>-api</artifactId>
+    <artifactId><%= projectName %>-model</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>io.rocketbase.commons</groupId>
-            <artifactId>commons-rest-api</artifactId>
-            <version>${commons-rest.version}</version>
+            <groupId><%= pomGroupId %></groupId>
+            <artifactId><%= projectName %>-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
-        <%_ if (auth) { _%>
+<%_ if (mongoDb) { _%>
         <dependency>
-            <groupId>io.rocketbase.commons</groupId>
-            <artifactId>commons-auth-api</artifactId>
-            <version>${commons-auth.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <%_ } _%>
+<%_ } else { _%>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+<%_ } _%>
     </dependencies>
 
 </project>

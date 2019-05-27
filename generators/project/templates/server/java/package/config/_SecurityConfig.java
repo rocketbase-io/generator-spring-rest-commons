@@ -1,6 +1,7 @@
 package <%= packageName %>.config;
 
 import io.rocketbase.commons.filter.JwtAuthenticationTokenFilter;
+import io.rocketbase.commons.security.TokenAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
+                .authenticationProvider(new TokenAuthenticationProvider())
                 .userDetailsService(this.userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
@@ -89,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/favicon.ico"
             ).permitAll()
             // configure auth endpoint
-            .antMatchers("/auth/login", "/auth/refresh").permitAll()
+            .antMatchers("/auth/login", "/auth/refresh", "/auth/validate/*", "/login", "/logout").permitAll()
             .antMatchers("/auth/me/**").authenticated()
             // user-management is only allowed by ADMINS
             .antMatchers("/api/user/**").hasRole("ADMIN")

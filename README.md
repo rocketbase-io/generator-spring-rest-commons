@@ -28,6 +28,6 @@ Scaffold your spring-boot application and generate services. The generated code 
 npm install -g yo
 npm install -g @rocketbase/generator-spring-rest-commons
 # usage
-yo spring-rest-commons
+yo @rocketbase/spring-rest-commons
 ```
 

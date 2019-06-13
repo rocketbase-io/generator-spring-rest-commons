@@ -1,7 +1,7 @@
 package <%= packageName %>.initializer;
 
 import io.rocketbase.commons.model.AppUser;
-import io.rocketbase.commons.service.AppUserService;
+import io.rocketbase.commons.service.user.AppUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

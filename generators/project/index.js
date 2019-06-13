@@ -148,6 +148,7 @@ module.exports = class extends Generator {
       copyTpl(tPath('server/java/package/initializer/_UserInitializer.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/initializer/UserInitializer.java'), props)
     }
     copyTpl(tPath('server/resources/_application.yml'), dPath(props.projectName + '-server/src/main/resources/application.yml'), props)
+    copyTpl(tPath('server/resources/_application-pro.yml'), dPath(props.projectName + '-server/src/main/resources/application-pro.yml'), props)
 
   }
 

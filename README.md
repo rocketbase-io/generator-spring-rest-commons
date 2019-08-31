@@ -12,14 +12,15 @@ Scaffold your spring-boot application and generate services. The generated code 
 - setup project with actual spring-boot and commons-rest
 - easy flow to create new service (generated DTOs, Repository, Controller, Converter etc.)
 - you can choose between JPA or MongoDB
+- optional commons-auth integration for jwt security
 
 ## technology
 
 * [spring-boot](https://projects.spring.io/spring-boot/) application
-* [MongoDB](https://www.mongodb.com/) via spring-data-mongodb or MySQL via spring-data-jpa
+* mongoDb via spring-data-mongodb or JPA via spring-data-jpa
 * [mapstruct](http://mapstruct.org/) to convert between DTOs and Entity
 * [commons-rest](https://github.com/rocketbase-io/commons-rest) to simplify CRUD coding
-
+* [commons-auth](https://github.com/rocketbase-io/commons-auth) to allow easy security via jwt
 
 ## usage
 

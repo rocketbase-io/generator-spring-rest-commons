@@ -1,3 +1,10 @@
+<%_ if (!mongoDb) { _%>
+spring:
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+<%_ } _%>
 logging:
   level:
     root: INFO

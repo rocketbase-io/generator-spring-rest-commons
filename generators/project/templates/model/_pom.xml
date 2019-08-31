@@ -29,6 +29,27 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 <%_ } _%>
+
+<%_ if (auth) { _%>
+        <dependency>
+            <groupId>io.rocketbase.commons</groupId>
+            <artifactId>commons-auth-core</artifactId>
+            <version>${commons-auth.version}</version>
+        </dependency>
+<%_ } _%>
+
+        <!-- mapstruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <!-- mapstruct end -->
     </dependencies>
 
 </project>

@@ -41,25 +41,20 @@
             <artifactId>commons-auth-mongo</artifactId>
             <version>${commons-auth.version}</version>
         </dependency>
-<%_ } else if (!mongoDb) { _%>
+<%_ } else if (!mongoDb && auth) { _%>
+        <dependency>
+            <groupId>io.rocketbase.commons</groupId>
+            <artifactId>commons-auth-jpa</artifactId>
+            <version>${commons-auth.version}</version>
+        </dependency>
+<%_ } _%>
+
+<%_ if (!mongoDb) { _%>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 <%_ } _%>
-
-        <!-- mapstruct -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-jdk8</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <!-- mapstruct end -->
 
         <!-- tests -->
         <dependency>

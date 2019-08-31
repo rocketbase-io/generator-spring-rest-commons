@@ -90,7 +90,6 @@ module.exports = class extends Generator {
       default: 'mongodb',
       store: true
     }, {
-      when: response => response.springData === 'mongodb',
       type: 'confirm',
       name: 'auth',
       message: 'With commons-auth (spring-security via JWT)',
@@ -118,10 +117,10 @@ module.exports = class extends Generator {
 
   writing () {
     var props = _.assign({
-      springBootVersion: '2.1.5.RELEASE',
-      mapstructVersion: '1.2.0.Final',
-      commonsRestVersion: '1.6.1',
-      commonsAuthVersion: '2.1.3'
+      springBootVersion: '2.1.7.RELEASE',
+      mapstructVersion: '1.3.0.Final',
+      commonsRestVersion: '1.6.2',
+      commonsAuthVersion: '2.5.1'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)
@@ -137,13 +136,13 @@ module.exports = class extends Generator {
 
     // model
     copyTpl(tPath('model/_pom.xml'), dPath(props.projectName + '-model/pom.xml'), props)
+    copyTpl(tPath('model/java/package/converter/_CentralConfig.java'), dPath(props.projectName + '-model/src/main/java/' + props.basePath + '/converter/CentralConfig.java'), props)
 
     // server
     copyTpl(tPath('server/_pom.xml'), dPath(props.projectName + '-server/pom.xml'), props)
     copyTpl(tPath('server/java/package/_Application.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/Application.java'), props)
-    copyTpl(tPath('server/java/package/converter/_CentralConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/converter/CentralConfig.java'), props)
     if (this.props.auth) {
-      copyTpl(tPath('server/java/package/config/_MongoDbConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/config/MongoDbConfig.java'), props)
+      copyTpl(tPath('server/java/package/config/_AuditDbConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/config/AuditDbConfig.java'), props)
       copyTpl(tPath('server/java/package/config/_SecurityConfig.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/config/SecurityConfig.java'), props)
       copyTpl(tPath('server/java/package/initializer/_UserInitializer.java'), dPath(props.projectName + '-server/src/main/java/' + props.basePath + '/initializer/UserInitializer.java'), props)
     }

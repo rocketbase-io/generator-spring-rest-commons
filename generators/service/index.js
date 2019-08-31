@@ -206,6 +206,7 @@ module.exports = class extends Generator {
     // model
     copyTpl(tPath('model/java/package/model/_EntityEntity.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
     copyTpl(tPath('model/java/package/repository/_EntityRepository.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)
+    copyTpl(tPath('model/java/package/converter/_EntityConverter.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
 
     // server
     if (props.isChild) {
@@ -221,7 +222,6 @@ module.exports = class extends Generator {
         copyTpl(tPath('server/java/package/controller/_EntityController.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/controller/' + props.entityName + 'Controller.java'), props)
       }
     }
-    copyTpl(tPath('server/java/package/converter/_EntityConverter.java'), dPath(this.serverPathName + '/src/main/java/' + props.basePath + '/converter/' + props.entityName + 'Converter.java'), props)
   }
 
   install () {

@@ -7,8 +7,11 @@ Generated project with [generator-spring-rest-commons](https://github.com/rocket
 * <%= projectName %>-api
   * containing DTOs and REST-resources
   * could be used in other projects to consume REST endpoints of server
+* <%= projectName %>-model
+  * containg entity-model, converter, spring-data repositories
+  * used to work with the database layer
 * <%= projectName %>-server
-  * containg controller, entity-model, converter, spring-data repositories, and SpringApplication
+  * containg controller and SpringApplication
   * used to provide REST-endpoints via spring boot
 
 

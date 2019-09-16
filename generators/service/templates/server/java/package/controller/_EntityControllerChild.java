@@ -2,8 +2,8 @@ package <%= packageName %>.controller;
 
 import io.rocketbase.commons.controller.AbstractCrudChildController;
 import <%= packageName %>.converter.<%= entityName %>Converter;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameRead %>;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameWrite %>;
 import <%= packageName %>.model.<%= entityName %>Entity;
 import <%= packageName %>.model.<%= parentName %>Entity;
 import <%= packageName %>.repository.<%= entityName %>Repository;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/<%= parentKebabCase %>/{parentId}/<%= entityKebabCase %>")
-public class <%= entityName %>Controller extends AbstractCrudChildController<<%= entityName %>Entity, <%= entityName %>Read, <%= entityName %>Write, <%= idClass %>, <%= entityName %>Converter> {
+public class <%= entityName %>Controller extends AbstractCrudChildController<<%= entityName %>Entity, <%= entityNameRead %>, <%= entityNameWrite %>, <%= idClass %>, <%= entityName %>Converter> {
 
     @Resource
     private <%= parentName %>Repository <%= parentCamelCase %>Repository;
@@ -48,7 +48,7 @@ public class <%= entityName %>Controller extends AbstractCrudChildController<<%=
     }
 
     @Override
-    protected <%= entityName %>Entity newEntity(String parentId, <%= entityName %>Write <%= entityCamelCase %>Write) {
+    protected <%= entityName %>Entity newEntity(String parentId, <%= entityNameWrite %> <%= entityCamelCase %>Write) {
         Optional<<%= parentName %>Entity> optional = <%= parentCamelCase %>Repository.findById(parentId);
         if (!optional.isPresent()) {
             throw new NotFoundException();

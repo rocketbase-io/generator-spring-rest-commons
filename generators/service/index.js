@@ -159,7 +159,24 @@ module.exports = class extends Generator {
       type: 'confirm',
       name: 'isCustom',
       message: 'Custom implementation without use of AbstractCrudController of commons-rest?',
+      default: true
+    }, {
+      when: response => response.isCustom,
+      type: 'confirm',
+      name: 'isDto',
+      message: 'Only use one Dto option instead of Read/Write?',
       default: false
+    }, {
+      when: response => (response.isCustom && response.springData !== 'mongodb'),
+      type: 'confirm',
+      name: 'obfuscated',
+      message: 'Want to obfuscate the id within the dto?',
+      default: false
+    }, {
+      type: 'confirm',
+      name: 'withResource',
+      message: 'Want to generate a Resource for accessing REST-API via Spring?',
+      default: true
     }]
 
     return this.prompt(prompts)
@@ -170,9 +187,14 @@ module.exports = class extends Generator {
         this.props.mongoDb = (this.springData !== null ? this.springData : answers.springData) === 'mongodb'
         this.props.idClass = this.props.mongoDb ? 'String' : 'Long'
 
+        this.props.isDto = answers.hasOwnProperty('isDto') ? answers.isDto : false
+        this.props.obfuscated = answers.hasOwnProperty('obfuscated') ? answers.obfuscated : false
+
         this.props.entityCamelCase = _.lowerFirst(answers.entityName)
         this.props.entityKebabCase = _.kebabCase(answers.entityName)
         this.props.entitySnakeCaseUpper = _.kebabCase(answers.entityName).replace('-', '_').toUpperCase()
+        this.props.entityNameRead = answers.entityName + (this.props.isDto ? 'Dto' : 'Read')
+        this.props.entityNameWrite = answers.entityName + (this.props.isDto ? 'Dto' : 'Write')
 
         if (this.props.isChild) {
           this.props.parentName = answers.parentEntityName
@@ -195,14 +217,20 @@ module.exports = class extends Generator {
     var dPath = this.destinationPath.bind(this)
 
     // api
-    copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Read.java'), props)
-    copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityName + 'Write.java'), props)
-    if (props.isChild) {
-      copyTpl(tPath('api/java/package/resource/_EntityResourceChild.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+    if (props.isDto) {
+      copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityNameRead + '.java'), props)
     } else {
-      copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+      copyTpl(tPath('api/java/package/dto/entity/_EntityRead.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityNameRead + '.java'), props)
+      copyTpl(tPath('api/java/package/dto/entity/_EntityWrite.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/dto/' + props.entityFolder + '/' + props.entityNameWrite + '.java'), props)
     }
 
+    if (props.withResource) {
+      if (props.isChild) {
+        copyTpl(tPath('api/java/package/resource/_EntityResourceChild.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+      } else {
+        copyTpl(tPath('api/java/package/resource/_EntityResource.java'), dPath(this.apiPathName + '/src/main/java/' + props.basePath + '/resource/' + props.entityName + 'Resource.java'), props)
+      }
+    }
     // model
     copyTpl(tPath('model/java/package/model/_EntityEntity.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/model/' + props.entityName + 'Entity.java'), props)
     copyTpl(tPath('model/java/package/repository/_EntityRepository.java'), dPath(this.modelPathName + '/src/main/java/' + props.basePath + '/repository/' + props.entityName + 'Repository.java'), props)

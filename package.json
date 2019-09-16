@@ -37,6 +37,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "@rocketbase:registry": "https://registry.npmjs.org/"
   }
 }

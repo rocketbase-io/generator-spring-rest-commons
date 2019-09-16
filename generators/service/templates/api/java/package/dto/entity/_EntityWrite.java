@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class <%= entityName %>Write implements Serializable {
+public class <%= entityNameWrite %> implements Serializable {
 
     private String name;
 }

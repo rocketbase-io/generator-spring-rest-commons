@@ -11,8 +11,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import <%= packageName %>.converter.<%= entityName %>Converter;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
+<%_ if (isDto) { _%>
+import <%= packageName %>.dto.<%= entityNameRead %>;
+<%_ } else { _%>
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameRead %>;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameWrite %>;
+<%_ } _%>
 import <%= packageName %>.model.<%= entityName %>Entity;
 import <%= packageName %>.repository.<%= entityName %>Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,30 +37,30 @@ public class <%= entityName %>Controller implements BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PageableResult<<%= entityName %>Read> find(@RequestParam(required = false) MultiValueMap<String, String> params) {
+    public PageableResult<<%= entityNameRead %>> find(@RequestParam(required = false) MultiValueMap<String, String> params) {
         Page<<%= entityName %>Entity> entities = repository.findAll(parsePageRequest(params, getDefaultSort()));
         return PageableResult.contentPage(converter.fromEntities(entities.getContent()), entities);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @ResponseBody
-    public <%= entityName %>Read getById(@PathVariable("id") <%= idClass %> id) {
+    public <%= entityNameRead %> getById(@PathVariable("id") <%= idClass %> id) {
         <%= entityName %>Entity entity = getEntity(id);
         return converter.fromEntity(entity);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public <%= entityName %>Read create(@RequestBody @NotNull @Validated <%= entityName %>Write write) {
-        <%= entityName %>Entity entity = repository.save(converter.newEntity(write));
+    public <%= entityNameRead %> create(@RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
+        <%= entityName %>Entity entity = repository.save(converter.newEntity(dto));
         return converter.fromEntity(entity);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public <%= entityName %>Read update(@PathVariable <%= idClass %> id, @RequestBody @NotNull @Validated <%= entityName %>Write write) {
+    public <%= entityNameRead %> update(@PathVariable <%= idClass %> id, @RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
         <%= entityName %>Entity entity = getEntity(id);
-        converter.updateEntityFromEdit(write, entity);
+        converter.updateEntityFromEdit(dto, entity);
         repository.save(entity);
         return converter.fromEntity(entity);
     }

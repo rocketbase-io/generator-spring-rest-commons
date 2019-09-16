@@ -12,8 +12,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import <%= packageName %>.converter.<%= entityName %>Converter;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
+<%_ if (isDto) { _%>
+import <%= packageName %>.dto.<%= entityNameRead %>;
+<%_ } else { _%>
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameRead %>;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameWrite %>;
+<%_ } _%>
 import <%= packageName %>.model.<%= entityName %>Entity;
 import <%= packageName %>.model.<%= parentName %>Entity;
 import <%= packageName %>.repository.<%= entityName %>Repository;
@@ -29,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/<%= parentKebabCase %>/{parentId}/<%= entityKebabCase %>")
+@RequestMapping("/api/<%= parentKebabCase %>/{<%= parentCamelCase %>Id}/<%= entityKebabCase %>")
 @RequiredArgsConstructor
 public class <%= entityName %>Controller implements BaseController {
 
@@ -41,36 +45,36 @@ public class <%= entityName %>Controller implements BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PageableResult<<%= entityName %>Read> find(@PathVariable("parentId") <%= idClass %> parentId, @RequestParam(required = false) MultiValueMap<String, String> params) {
+    public PageableResult<<%= entityNameRead %>> find(@PathVariable("<%= parentCamelCase %>Id") <%= idClass %> parentId, @RequestParam(required = false) MultiValueMap<String, String> params) {
         Page<<%= entityName %>Entity> entities = findAllByParentId(parentId, parsePageRequest(params, getDefaultSort()));
         return PageableResult.contentPage(converter.fromEntities(entities.getContent()), entities);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @ResponseBody
-    public <%= entityName %>Read getById(@PathVariable("parentId") <%= idClass %> parentId, @PathVariable("id") <%= idClass %> id) {
+    public <%= entityNameRead %> getById(@PathVariable("<%= parentCamelCase %>Id") <%= idClass %> parentId, @PathVariable("id") <%= idClass %> id) {
         <%= entityName %>Entity entity = getEntity(parentId, id);
         return converter.fromEntity(entity);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public <%= entityName %>Read create(@PathVariable("parentId") <%= idClass %> parentId, @RequestBody @NotNull @Validated <%= entityName %>Write write) {
-        <%= entityName %>Entity entity = <%= entityCamelCase %>Repository.save(newEntity(parentId, write));
+    public <%= entityNameRead %> create(@PathVariable("<%= parentCamelCase %>") <%= idClass %> parentId, @RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
+        <%= entityName %>Entity entity = <%= entityCamelCase %>Repository.save(newEntity(parentId, dto));
         return converter.fromEntity(entity);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}", consumes = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public <%= entityName %>Read update(@PathVariable("parentId") <%= idClass %> parentId, @PathVariable <%= idClass %> id, @RequestBody @NotNull @Validated <%= entityName %>Write write) {
+    public <%= entityNameRead %> update(@PathVariable("<%= parentCamelCase %>Id") <%= idClass %> parentId, @PathVariable <%= idClass %> id, @RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
         <%= entityName %>Entity entity = getEntity(parentId, id);
-        converter.updateEntityFromEdit(write, entity);
+        converter.updateEntityFromEdit(dto, entity);
         <%= entityCamelCase %>Repository.save(entity);
         return converter.fromEntity(entity);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
-    public void delete(@PathVariable("parentId") <%= idClass %> parentId, @PathVariable("id") <%= idClass %> id) {
+    public void delete(@PathVariable("<%= parentCamelCase %>Id") <%= idClass %> parentId, @PathVariable("id") <%= idClass %> id) {
         <%= entityName %>Entity entity = getEntity(parentId, id);
         <%= entityCamelCase %>Repository.delete(entity);
     }
@@ -90,11 +94,11 @@ public class <%= entityName %>Controller implements BaseController {
         return <%= entityCamelCase %>Repository.findAll(pageable);
     }
 
-    protected <%= entityName %>Entity newEntity(<%= idClass %> parentId, <%= entityName %>Write writeData) {
+    protected <%= entityName %>Entity newEntity(<%= idClass %> parentId, <%= entityNameWrite %> dto) {
         <%= parentName %>Entity parent = <%= parentCamelCase %>Repository.findById(parentId)
             .orElseThrow(() -> new NotFoundException());
 
-        <%= entityName %>Entity entity = converter.newEntity(writeData);
+        <%= entityName %>Entity entity = converter.newEntity(dto);
         // todo: need implementation
         // entity.setParent(parent.getId());
         return entity;

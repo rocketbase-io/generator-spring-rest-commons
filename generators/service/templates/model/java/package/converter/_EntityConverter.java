@@ -1,23 +1,27 @@
 package <%= packageName %>.converter;
 
 import io.rocketbase.commons.converter.EntityReadWriteConverter;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Read;
-import <%= packageName %>.dto.<%= entityFolder %>.<%= entityName %>Write;
+<%_ if (isDto) { _%>
+import <%= packageName %>.dto.<%= entityNameRead %>;
+<%_ } else { _%>
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameRead %>;
+import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameWrite %>;
+<%_ } _%>
 import <%= packageName %>.model.<%= entityName %>Entity;
 import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(config = CentralConfig.class)
-public interface <%= entityName %>Converter extends EntityReadWriteConverter<<%= entityName %>Entity, <%= entityName %>Read, <%= entityName %>Write> {
+public interface <%= entityName %>Converter extends EntityReadWriteConverter<<%= entityName %>Entity, <%= entityNameRead %>, <%= entityNameWrite %>> {
 
-    <%= entityName %>Read fromEntity(<%= entityName %>Entity entity);
+    <%= entityNameRead %> fromEntity(<%= entityName %>Entity entity);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
     })
-    <%= entityName %>Entity newEntity(<%= entityName %>Write workspace);
+    <%= entityName %>Entity newEntity(<%= entityNameWrite %> write);
 
     @InheritConfiguration()
-    <%= entityName %>Entity updateEntityFromEdit(<%= entityName %>Write write, @MappingTarget <%= entityName %>Entity entity);
+    <%= entityName %>Entity updateEntityFromEdit(<%= entityNameWrite %> write, @MappingTarget <%= entityName %>Entity entity);
 }

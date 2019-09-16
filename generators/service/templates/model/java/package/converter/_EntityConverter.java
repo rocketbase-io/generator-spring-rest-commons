@@ -17,9 +17,7 @@ public interface <%= entityName %>Converter extends EntityReadWriteConverter<<%=
 
     <%= entityNameRead %> fromEntity(<%= entityName %>Entity entity);
 
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-    })
+    @Mapping(target = "id", ignore = true)
     <%= entityName %>Entity newEntity(<%= entityNameWrite %> write);
 
     @InheritConfiguration()

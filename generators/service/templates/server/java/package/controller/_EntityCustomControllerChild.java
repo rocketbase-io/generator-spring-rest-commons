@@ -59,7 +59,7 @@ public class <%= entityName %>Controller implements BaseController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public <%= entityNameRead %> create(@PathVariable("<%= parentCamelCase %>") <%= idClass %> parentId, @RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
+    public <%= entityNameRead %> create(@PathVariable("<%= parentCamelCase %>Id") <%= idClass %> parentId, @RequestBody @NotNull @Validated <%= entityNameWrite %> dto) {
         <%= entityName %>Entity entity = <%= entityCamelCase %>Repository.save(newEntity(parentId, dto));
         return converter.fromEntity(entity);
     }

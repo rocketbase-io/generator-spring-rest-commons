@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-- node
-deploy:
-  provider: npm
-  email: team@rocketbase.io
-  api_key:
-    secure: ClMtWFvW/HfJAy2OODpHHaa+gKLuYNDEsuOeVZockfbpsCCjmO7zdXFpgmvaTtWNU+ikSMfHsgDvvoHRea3gHgCI+m4IdvIQqkqgYk19W/zbaApH6ZICBAKyYQCuWw+718wmSq3JpuwBIuY5NreZn2KHrPI8aP0vM1wXHf3Ev1jd6F3Fb1flCunVzVuaLEW1cZoqj+jaPcZVxTRRw8rJfO6EQ7gFWthY2D/dnHaNd3FGSgzXkO/ZcAPe4N7oxq6N2mv0qtNl4ChVkiAnH6t2JPEvwVEZbQZAMeir5TgHhHxXrWgGcw4qhHHkoSHUlXKDVi1EDgGU8XzpemVFYQcpWb+X1ImaBNYj9gNoEwZ7gp1/UMjJdWUyMtcTC7oXFoE/FI6XEYjCiZCcl2UNvyF8ijPxdnn5NXXC3F1ZM8BwYggk1lgiYOd/RaeX50Oj3shGFNBSSe3QBEHHNTqjes0YBp66lWLyF5d0wyQTW+r89S7DQuk8itLMnlK1xi5murJ4SddBaqWqpodZtdrhPgbeeNLeqFliH65Fvzmuo0eozCGnrbrzOoZAa4oOoHB6CzLOHmDLPGjq//nzHt9aHRxX54dNU+ik/lCs5pKwhtDCWoFjufwdkiOSjO0CrmCS7mwKrO1gGFFcT9sOCSACC5cmZjtQdhGDiOfe9bwxyaFMCz4=
-  on:
-    tags: true
+  - node
+# deploy:
+#   provider: npm
+#   email: team@rocketbase.io
+#   api_key:
+#     secure: ClMtWFvW/HfJAy2OODpHHaa+gKLuYNDEsuOeVZockfbpsCCjmO7zdXFpgmvaTtWNU+ikSMfHsgDvvoHRea3gHgCI+m4IdvIQqkqgYk19W/zbaApH6ZICBAKyYQCuWw+718wmSq3JpuwBIuY5NreZn2KHrPI8aP0vM1wXHf3Ev1jd6F3Fb1flCunVzVuaLEW1cZoqj+jaPcZVxTRRw8rJfO6EQ7gFWthY2D/dnHaNd3FGSgzXkO/ZcAPe4N7oxq6N2mv0qtNl4ChVkiAnH6t2JPEvwVEZbQZAMeir5TgHhHxXrWgGcw4qhHHkoSHUlXKDVi1EDgGU8XzpemVFYQcpWb+X1ImaBNYj9gNoEwZ7gp1/UMjJdWUyMtcTC7oXFoE/FI6XEYjCiZCcl2UNvyF8ijPxdnn5NXXC3F1ZM8BwYggk1lgiYOd/RaeX50Oj3shGFNBSSe3QBEHHNTqjes0YBp66lWLyF5d0wyQTW+r89S7DQuk8itLMnlK1xi5murJ4SddBaqWqpodZtdrhPgbeeNLeqFliH65Fvzmuo0eozCGnrbrzOoZAa4oOoHB6CzLOHmDLPGjq//nzHt9aHRxX54dNU+ik/lCs5pKwhtDCWoFjufwdkiOSjO0CrmCS7mwKrO1gGFFcT9sOCSACC5cmZjtQdhGDiOfe9bwxyaFMCz4=
+#   on:
+#     tags: true
 notifications:
   email: false

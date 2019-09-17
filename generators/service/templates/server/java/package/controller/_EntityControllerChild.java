@@ -1,6 +1,11 @@
 package <%= packageName %>.controller;
 
+<%_ if (obfuscated) { _%>
 import io.rocketbase.commons.controller.AbstractCrudChildController;
+<%_ } else { _%>
+import io.rocketbase.commons.controller.AbstractCrudChildObfuscatedController;
+import io.rocketbase.commons.obfuscated.ObfuscatedId;
+<%_ } _%>
 import <%= packageName %>.converter.<%= entityName %>Converter;
 import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameRead %>;
 import <%= packageName %>.dto.<%= entityFolder %>.<%= entityNameWrite %>;
@@ -23,7 +28,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/<%= parentKebabCase %>/{parentId}/<%= entityKebabCase %>")
-public class <%= entityName %>Controller extends AbstractCrudChildController<<%= entityName %>Entity, <%= entityNameRead %>, <%= entityNameWrite %>, <%= idClass %>, <%= entityName %>Converter> {
+public class <%= entityName %>Controller extends <%_ if (obfuscated) { _%>AbstractCrudChildObfuscatedController<%_ } else { _%>AbstractCrudChildController<%_ } _%><<%= entityName %>Entity, <%= entityNameRead %>, <%= entityNameWrite %><%_ if (!obfuscated) { _%>, <%= idClass %><%_ } _%>, <%= entityName %>Converter> {
 
     @Resource
     private <%= parentName %>Repository <%= parentCamelCase %>Repository;
@@ -34,21 +39,21 @@ public class <%= entityName %>Controller extends AbstractCrudChildController<<%=
     }
 
     @Override
-    protected <%= entityName %>Entity getEntity(String parentId, String id) {
+    protected <%= entityName %>Entity getEntity(<%= idClass %> parentId, <%= idClass %> id) {
         // todo: need to add correct implementation
         // return getRepository().findOneBy<%= parentName %>IdAndId(parentId, id);
         return null;
     }
 
     @Override
-    protected Page<<%= entityName %>Entity> findAllByParentId(String parentId, Pageable pageable) {
+    protected Page<<%= entityName %>Entity> findAllByParentId(<%= idClass %> parentId, Pageable pageable) {
         // todo: need to add correct implementation
         // return getRepository().findAllBy<%= parentName %>Id(parentId, pageable);
         return null;
     }
 
     @Override
-    protected <%= entityName %>Entity newEntity(String parentId, <%= entityNameWrite %> <%= entityCamelCase %>Write) {
+    protected <%= entityName %>Entity newEntity(<%= idClass %> parentId, <%= entityNameWrite %> <%= entityCamelCase %>Write) {
         Optional<<%= parentName %>Entity> optional = <%= parentCamelCase %>Repository.findById(parentId);
         if (!optional.isPresent()) {
             throw new NotFoundException();

@@ -186,9 +186,14 @@ module.exports = class extends Generator {
 
         this.props.mongoDb = (this.springData !== null ? this.springData : answers.springData) === 'mongodb'
         this.props.idClass = this.props.mongoDb ? 'String' : 'Long'
+        this.props.idClassObfuscated = this.props.idClass
 
         this.props.isDto = answers.hasOwnProperty('isDto') ? answers.isDto : false
         this.props.obfuscated = answers.hasOwnProperty('obfuscated') ? answers.obfuscated : false
+
+        if (this.props.obfuscated) {
+          this.props.idClassObfuscated = 'ObfuscatedId'
+        }
 
         this.props.entityCamelCase = _.lowerFirst(answers.entityName)
         this.props.entityKebabCase = _.kebabCase(answers.entityName)

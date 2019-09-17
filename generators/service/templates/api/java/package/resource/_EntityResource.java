@@ -9,7 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestTemplate;
 
 
-public class <%= entityName %>Resource extends AbstractCrudRestResource<<%= entityNameRead %>, <%= entityNameWrite %>, <%= idClass %>> {
+public class <%= entityName %>Resource extends AbstractCrudRestResource<<%= entityNameRead %>, <%= entityNameWrite %>, <%= idClassObfuscated %>> {
 
     protected String baseUrl;
 

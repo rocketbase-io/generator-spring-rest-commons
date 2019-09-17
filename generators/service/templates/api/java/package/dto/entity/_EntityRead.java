@@ -20,11 +20,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class <%= entityNameRead %> implements Serializable {
 
-<%_ if (obfuscated) { _%>
-    private ObfuscatedId id;
-<%_ } else { _%>
-    private <%= idClass %> id;
-<%_ } _%>
+    private <%= idClassObfuscated %> id;
 
     private String name;
 }

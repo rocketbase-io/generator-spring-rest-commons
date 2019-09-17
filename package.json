@@ -1,6 +1,6 @@
 {
   "name": "@rocketbase/generator-spring-rest-commons",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "scandaffoling spring-boot crud rest code",
   "license": "MIT",
   "homepage": "https://github.com/rocketbase-io/generator-spring-rest-commons",

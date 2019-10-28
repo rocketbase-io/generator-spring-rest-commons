@@ -1,6 +1,6 @@
 {
   "name": "@rocketbase/generator-spring-rest-commons",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "description": "scandaffoling spring-boot crud rest code",
   "license": "MIT",
   "homepage": "https://github.com/rocketbase-io/generator-spring-rest-commons",
@@ -31,8 +31,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "lodash": "^4.17.15",
-    "xml2js": "^0.4.19",
-    "yeoman-generator": "^2.0.5",
+    "xml2js": "^0.4.22",
+    "yeoman-generator": "^4.2.0",
     "yosay": "^2.0.2"
   },
   "publishConfig": {

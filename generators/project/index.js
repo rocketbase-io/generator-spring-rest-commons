@@ -117,10 +117,10 @@ module.exports = class extends Generator {
 
   writing () {
     var props = _.assign({
-      springBootVersion: '2.1.8.RELEASE',
-      mapstructVersion: '1.3.0.Final',
-      commonsRestVersion: '1.8.0',
-      commonsAuthVersion: '2.5.3'
+      springBootVersion: '2.2.0.RELEASE',
+      mapstructVersion: '1.3.1.Final',
+      commonsRestVersion: '1.9.1',
+      commonsAuthVersion: '2.6.0'
     }, this.props)
     var copy = this.fs.copy.bind(this.fs)
     var copyTpl = this.fs.copyTpl.bind(this.fs)

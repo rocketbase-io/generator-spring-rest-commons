@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.2"></a>
+## [2.4.2](https://github.com/rocketbase-io/generator-spring-rest-commons/compare/v2.4.1...v2.4.2) (2019-11-08)
+
+
+
 <a name="2.4.1"></a>
 ## [2.4.1](https://github.com/rocketbase-io/generator-spring-rest-commons/compare/v2.3.2...v2.4.1) (2019-10-28)
 

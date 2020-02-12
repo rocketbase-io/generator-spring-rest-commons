@@ -1,6 +1,18 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [2.5.0](https://github.com/rocketbase-io/generator-spring-rest-commons/compare/v2.4.2...v2.5.0) (2020-02-12)
+
+
+### Features
+
+* upgraded to new spring-boot + commons-auth with it's structure changes ([d34e397](https://github.com/rocketbase-io/generator-spring-rest-commons/commit/d34e397b83d0286f667ce3e98e100f7cdd6fe547))
+
+
+### Bug Fixes
+
+* upgrade versions ([bc01261](https://github.com/rocketbase-io/generator-spring-rest-commons/commit/bc01261550b6e6adf84f08afa0e20ac9014c4be0))
 
 <a name="2.4.2"></a>
 ## [2.4.2](https://github.com/rocketbase-io/generator-spring-rest-commons/compare/v2.4.1...v2.4.2) (2019-11-08)

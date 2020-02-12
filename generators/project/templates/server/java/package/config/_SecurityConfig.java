@@ -1,8 +1,12 @@
 package <%= packageName %>.config;
 
+import io.rocketbase.commons.config.AuthProperties;
+import io.rocketbase.commons.config.FormsProperties;
 import io.rocketbase.commons.filter.JwtAuthenticationTokenFilter;
 import io.rocketbase.commons.security.TokenAuthenticationProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,7 +34,13 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableConfigurationProperties({AuthProperties.class, FormsProperties.class})
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AuthProperties authProperties;
+
+    private final FormsProperties formsProperties;
 
     @Resource
     private UserDetailsService userDetailsService;
@@ -74,43 +84,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // @formatter:off
         httpSecurity
-            // we don't need CSRF because our token is invulnerable
-            .csrf().disable()
+                // we don't need CSRF because our token is invulnerable
+                .csrf().disable()
 
-            // don't create session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                // don't create session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
 
-            .authorizeRequests()
-            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 
-            // allow anonymous resource requests
-            .antMatchers(HttpMethod.GET,
-                    "/",
-                    "/assets/**",
-                    "/favicon.ico"
-            ).permitAll()
-            // configure auth endpoint
-            .antMatchers("/auth/login", "/auth/refresh", "/auth/validate/*", "/login", "/logout").permitAll()
-            .antMatchers("/auth/me/**").authenticated()
-            // user-management is only allowed by ADMINS
-            .antMatchers("/api/user/**").hasRole("ADMIN")
-            // secure all other api-endpoints
-            .antMatchers("/api/**").authenticated();
+                // allow anonymous resource requests
+                .antMatchers(HttpMethod.GET,
+                        "/",
+                        "/assets/**",
+                        "/favicon.ico"
+                ).permitAll()
+                // configure auth endpoint
+                .antMatchers(authProperties.getAllPublicRestEndpointPaths()).permitAll()
+                // allow logged in users get profile details etc.
+                .antMatchers(authProperties.getAllAuthenticatedRestEndpointPaths()).authenticated()
+                // login/logout, forgot, reset-password forms etc
+                .antMatchers(formsProperties.getFormEndpointPaths()).permitAll()
+                // registration form
+                .antMatchers(formsProperties.getRegistrationEndpointPaths()).permitAll()
+                // invite form
+                .antMatchers(formsProperties.getInviteEndpointPaths()).permitAll()
+                // user-management is only allowed by ADMINS
+                .antMatchers(authProperties.getApiRestEndpointPaths()).hasRole(authProperties.getRoleAdmin())
+                .antMatchers(authProperties.getApiInviteRestEndpointPaths()).hasRole(authProperties.getRoleAdmin())
+                .antMatchers(authProperties.getUserSearchRestEndpointPaths()).authenticated()
+                // secure all other api-endpoints
+                .antMatchers(authProperties.getPrefix()+"/api/**").authenticated()
+                .anyRequest().authenticated();
 
         // Custom JWT based security filter
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
-        // disable page cachingtemplates
+        // allow also basic auth (optional)
+        httpSecurity.httpBasic();
+
+        // disable page caching templates
         httpSecurity.headers().cacheControl().disable();
         // @formatter:on
     }
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS);
+        // needed when basic auth is also set and oauth (with header auth is used)
+        web.ignoring().antMatchers(authProperties.getOauthRestEndpointPaths());
     }
 
     @Bean
@@ -120,7 +143,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedMethod(CorsConfiguration.ALL);
         configuration.addAllowedHeader(CorsConfiguration.ALL);
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(600L);
+        configuration.setMaxAge(1800L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

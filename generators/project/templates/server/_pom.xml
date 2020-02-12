@@ -41,16 +41,15 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<%_ if (mongoDb && auth) { _%>
         <dependency>
-            <groupId>io.rocketbase.commons</groupId>
-            <artifactId>commons-auth-mongo</artifactId>
-            <version>${commons-auth.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-<%_ } else if (!mongoDb && auth) { _%>
+
+<%_ if (auth) { _%>
         <dependency>
             <groupId>io.rocketbase.commons</groupId>
-            <artifactId>commons-auth-jpa</artifactId>
+            <artifactId>commons-auth-server</artifactId>
             <version>${commons-auth.version}</version>
         </dependency>
 <%_ } _%>

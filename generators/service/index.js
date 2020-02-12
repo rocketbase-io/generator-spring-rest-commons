@@ -197,7 +197,7 @@ module.exports = class extends Generator {
 
         this.props.entityCamelCase = _.lowerFirst(answers.entityName)
         this.props.entityKebabCase = _.kebabCase(answers.entityName)
-        this.props.entitySnakeCaseUpper = _.kebabCase(answers.entityName).replace('-', '_').toUpperCase()
+        this.props.entitySnakeCase = _.kebabCase(answers.entityName).replace('-', '_').toLocaleLowerCase()
         this.props.entityNameRead = answers.entityName + (this.props.isDto ? 'Dto' : 'Read')
         this.props.entityNameWrite = answers.entityName + (this.props.isDto ? 'Dto' : 'Write')
 

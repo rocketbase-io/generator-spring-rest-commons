@@ -30,10 +30,16 @@
         </dependency>
 <%_ } _%>
 
-<%_ if (auth) { _%>
+<%_ if (mongoDb && auth) { _%>
         <dependency>
             <groupId>io.rocketbase.commons</groupId>
-            <artifactId>commons-auth-core</artifactId>
+            <artifactId>commons-auth-mongo</artifactId>
+            <version>${commons-auth.version}</version>
+        </dependency>
+<%_ } else if (!mongoDb && auth) { _%>
+        <dependency>
+            <groupId>io.rocketbase.commons</groupId>
+            <artifactId>commons-auth-jpa</artifactId>
             <version>${commons-auth.version}</version>
         </dependency>
 <%_ } _%>
